@@ -11,12 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class FoodRecipeSharingApplication implements CommandLineRunner {
+public class WorkoutHubApplication implements CommandLineRunner {
 
 	private final UserRepository userRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(FoodRecipeSharingApplication.class, args);
+		SpringApplication.run(WorkoutHubApplication.class, args);
 	}
 
 	public void run(String... args){
