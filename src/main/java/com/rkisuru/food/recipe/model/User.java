@@ -1,29 +1,46 @@
 package com.rkisuru.food.recipe.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rkisuru.food.recipe.role.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
 @Data
-@Table(name = "user")
-public class User implements UserDetails {
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name = "users")
+public class User implements UserDetails, Principal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String password;
+
     @Column(unique = true, nullable = false)
     private String email;
+
     @Column(nullable = false)
-    private String fullName;
+    private String firstname;
+
+    @Column(nullable = false)
+    private String lastname;
+
+    @OneToMany(mappedBy = "user")
+
+    @JsonIgnore
+    private List<Workout> workouts;
 
     private Role role;
 
@@ -61,4 +78,10 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    @Override
+    public String getName() {
+        return email;
+    }
 }
+
