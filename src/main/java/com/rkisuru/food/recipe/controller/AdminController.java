@@ -2,9 +2,7 @@ package com.rkisuru.food.recipe.controller;
 
 import com.rkisuru.food.recipe.model.User;
 import com.rkisuru.food.recipe.repository.UserRepository;
-import com.rkisuru.food.recipe.service.RecipeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,11 +12,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RecipeService recipeService;
+    private final UserRepository userRepository;
 
     @GetMapping("/users")
     public List<User> getAllUsers(){
