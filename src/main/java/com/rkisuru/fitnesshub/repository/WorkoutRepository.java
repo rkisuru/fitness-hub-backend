@@ -1,6 +1,6 @@
-package com.rkisuru.food.recipe.repository;
+package com.rkisuru.fitnesshub.repository;
 
-import com.rkisuru.food.recipe.model.Workout;
+import com.rkisuru.fitnesshub.entity.Workout;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

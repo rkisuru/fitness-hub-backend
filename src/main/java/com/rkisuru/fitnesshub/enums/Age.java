@@ -1,4 +1,4 @@
-package com.rkisuru.food.recipe.enums;
+package com.rkisuru.fitnesshub.enums;
 
 import lombok.Getter;
 
