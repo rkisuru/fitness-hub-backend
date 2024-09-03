@@ -1,14 +1,12 @@
-package com.rkisuru.food.recipe.service;
+package com.rkisuru.fitnesshub.service;
 
-import com.rkisuru.food.recipe.model.User;
-import com.rkisuru.food.recipe.repository.UserRepository;
+import com.rkisuru.fitnesshub.entity.User;
+import com.rkisuru.fitnesshub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,10 +25,6 @@ public class UserService {
     }
 
     public User findUserById(Long userId) throws Exception{
-        Optional<User> optionalUser = userRepository.findById(userId);
-        if (optionalUser.isPresent()){
-            return optionalUser.get();
-        }
-        throw new Exception("User not found");
+        return userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User not found"));
     }
 }

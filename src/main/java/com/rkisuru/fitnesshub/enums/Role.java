@@ -1,4 +1,4 @@
-package com.rkisuru.food.recipe.role;
+package com.rkisuru.fitnesshub.enums;
 
 public enum Role {
 

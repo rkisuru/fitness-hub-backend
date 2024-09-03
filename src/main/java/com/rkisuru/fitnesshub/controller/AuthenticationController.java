@@ -1,11 +1,11 @@
-package com.rkisuru.food.recipe.controller;
+package com.rkisuru.fitnesshub.controller;
 
-import com.rkisuru.food.recipe.dto.JwtAuthenticationResponse;
-import com.rkisuru.food.recipe.dto.RefreshTokenRequest;
-import com.rkisuru.food.recipe.dto.SignInRequest;
-import com.rkisuru.food.recipe.dto.SignUpRequest;
-import com.rkisuru.food.recipe.model.User;
-import com.rkisuru.food.recipe.service.AuthenticationService;
+import com.rkisuru.fitnesshub.dto.JwtAuthenticationResponse;
+import com.rkisuru.fitnesshub.dto.RefreshTokenRequest;
+import com.rkisuru.fitnesshub.dto.SignInRequest;
+import com.rkisuru.fitnesshub.dto.SignUpRequest;
+import com.rkisuru.fitnesshub.entity.User;
+import com.rkisuru.fitnesshub.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

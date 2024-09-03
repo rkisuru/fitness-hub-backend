@@ -1,12 +1,12 @@
-package com.rkisuru.food.recipe.service;
+package com.rkisuru.fitnesshub.service;
 
-import com.rkisuru.food.recipe.dto.JwtAuthenticationResponse;
-import com.rkisuru.food.recipe.dto.RefreshTokenRequest;
-import com.rkisuru.food.recipe.dto.SignInRequest;
-import com.rkisuru.food.recipe.dto.SignUpRequest;
-import com.rkisuru.food.recipe.model.User;
-import com.rkisuru.food.recipe.repository.UserRepository;
-import com.rkisuru.food.recipe.role.Role;
+import com.rkisuru.fitnesshub.dto.SignInRequest;
+import com.rkisuru.fitnesshub.entity.User;
+import com.rkisuru.fitnesshub.dto.JwtAuthenticationResponse;
+import com.rkisuru.fitnesshub.dto.RefreshTokenRequest;
+import com.rkisuru.fitnesshub.dto.SignUpRequest;
+import com.rkisuru.fitnesshub.repository.UserRepository;
+import com.rkisuru.fitnesshub.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

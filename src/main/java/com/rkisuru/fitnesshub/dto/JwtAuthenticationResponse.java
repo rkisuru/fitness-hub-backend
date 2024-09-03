@@ -1,4 +1,4 @@
-package com.rkisuru.food.recipe.dto;
+package com.rkisuru.fitnesshub.dto;
 
 import lombok.Data;
 

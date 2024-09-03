@@ -1,4 +1,4 @@
-package com.rkisuru.food.recipe.service;
+package com.rkisuru.fitnesshub.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

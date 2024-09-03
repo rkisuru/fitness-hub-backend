@@ -1,7 +1,7 @@
-package com.rkisuru.food.recipe.config;
+package com.rkisuru.fitnesshub.config;
 
-import com.rkisuru.food.recipe.service.JwtService;
-import com.rkisuru.food.recipe.service.UserService;
+import com.rkisuru.fitnesshub.service.UserService;
+import com.rkisuru.fitnesshub.service.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

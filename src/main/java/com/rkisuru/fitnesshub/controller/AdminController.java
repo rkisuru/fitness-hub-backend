@@ -1,7 +1,7 @@
-package com.rkisuru.food.recipe.controller;
+package com.rkisuru.fitnesshub.controller;
 
-import com.rkisuru.food.recipe.model.User;
-import com.rkisuru.food.recipe.repository.UserRepository;
+import com.rkisuru.fitnesshub.entity.User;
+import com.rkisuru.fitnesshub.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

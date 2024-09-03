@@ -1,7 +1,7 @@
-package com.rkisuru.food.recipe.config;
+package com.rkisuru.fitnesshub.config;
 
-import com.rkisuru.food.recipe.role.Role;
-import com.rkisuru.food.recipe.service.UserService;
+import com.rkisuru.fitnesshub.service.UserService;
+import com.rkisuru.fitnesshub.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
