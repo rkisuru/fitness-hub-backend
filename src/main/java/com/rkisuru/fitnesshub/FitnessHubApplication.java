@@ -1,22 +1,24 @@
-package com.rkisuru.food.recipe;
+package com.rkisuru.fitnesshub;
 
-import com.rkisuru.food.recipe.model.User;
-import com.rkisuru.food.recipe.repository.UserRepository;
-import com.rkisuru.food.recipe.role.Role;
+import com.rkisuru.fitnesshub.entity.User;
+import com.rkisuru.fitnesshub.repository.UserRepository;
+import com.rkisuru.fitnesshub.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
 @RequiredArgsConstructor
-public class WorkoutHubApplication implements CommandLineRunner {
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
+public class FitnessHubApplication implements CommandLineRunner {
 
 	private final UserRepository userRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(WorkoutHubApplication.class, args);
+		SpringApplication.run(FitnessHubApplication.class, args);
 	}
 
 	public void run(String... args){
