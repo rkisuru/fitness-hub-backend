@@ -1,7 +1,7 @@
-package com.rkisuru.food.recipe.model;
+package com.rkisuru.fitnesshub.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rkisuru.food.recipe.role.Role;
+import com.rkisuru.fitnesshub.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,8 +37,9 @@ public class User implements UserDetails, Principal {
     @Column(nullable = false)
     private String lastname;
 
-    @OneToMany(mappedBy = "user")
+    private String description;
 
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Workout> workouts;
 
@@ -82,6 +83,10 @@ public class User implements UserDetails, Principal {
     @Override
     public String getName() {
         return email;
+    }
+
+    public String getFullName() {
+        return firstname + " " + lastname;
     }
 }
 
