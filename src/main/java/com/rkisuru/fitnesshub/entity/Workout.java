@@ -7,15 +7,21 @@ import com.rkisuru.fitnesshub.enums.Gender;
 import com.rkisuru.fitnesshub.enums.WorkoutType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Workout {
 
     @Id
@@ -26,7 +32,7 @@ public class Workout {
     private String title;
 
     private String duration;
-    private int calories;
+    private Integer calories;
     private String coverImage;
 
     @Enumerated(EnumType.STRING)
@@ -56,5 +62,17 @@ public class Workout {
     @OneToMany(mappedBy = "workout")
     @JsonIgnore
     private List<Comment> comments;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
+
+    @LastModifiedDate
+    @Column(insertable = false)
+    private LocalDateTime modifiedAt;
 
 }
