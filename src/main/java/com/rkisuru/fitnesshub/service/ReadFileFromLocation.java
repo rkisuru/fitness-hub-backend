@@ -11,7 +11,7 @@ import java.nio.file.Path;
 
 @Service
 @Slf4j
-public class ReadFile {
+public class ReadFileFromLocation {
 
     public static byte[] readFile(String fileUrl) {
 
