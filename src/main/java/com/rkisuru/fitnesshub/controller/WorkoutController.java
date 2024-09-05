@@ -2,10 +2,8 @@ package com.rkisuru.fitnesshub.controller;
 
 import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
-import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.service.ExerciseService;
 import com.rkisuru.fitnesshub.service.WorkoutService;
-import com.rkisuru.fitnesshub.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -18,7 +16,6 @@ public class WorkoutController {
 
     private final WorkoutService workoutService;
     private final ExerciseService exerciseService;
-    private final UserService userService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createWorkout(@RequestBody WorkoutRequest request) {
@@ -42,5 +39,11 @@ public class WorkoutController {
     public ResponseEntity<?> getAllWorkouts() {
 
         return ResponseEntity.ok(workoutService.getAllWorkouts());
+    }
+
+    @GetMapping("/{workoutId}")
+    public ResponseEntity<?> getWorkoutById(@PathVariable Long workoutId) {
+
+        return ResponseEntity.ok(workoutService.findWorkoutById(workoutId));
     }
 }

@@ -7,6 +7,7 @@ import com.rkisuru.fitnesshub.entity.Workout;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.ExerciseRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -31,7 +32,7 @@ public class WorkoutService {
     public String deleteWorkout(Long id, Authentication connectedUser) {
 
         Workout workout = workoutRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Workout not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Workout not found"));
 
         if (workout.getCreatedBy().equals(connectedUser.getName())) {
 
@@ -49,6 +50,14 @@ public class WorkoutService {
                 .stream()
                 .map(mapper::fromWorkout)
                 .toList();
+    }
+
+    public WorkoutResponse findWorkoutById(Long workoutId) {
+
+        Workout workout = workoutRepository.findById(workoutId)
+                .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
+
+        return mapper.fromWorkout(workout);
     }
 
 }
