@@ -6,9 +6,12 @@ import com.rkisuru.fitnesshub.dto.WorkoutRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
 import com.rkisuru.fitnesshub.entity.Workout;
+import com.rkisuru.fitnesshub.service.ReadFileFromLocation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DtoMapper {
 
     public Exercise toExercise (ExerciseRequest request) {
@@ -39,7 +42,7 @@ public class DtoMapper {
                 .name(exercise.getName())
                 .description(exercise.getDescription())
                 .targetMuscle(exercise.getTargetMuscle())
-                .image(exercise.getImage().getBytes())
+                .image(ReadFileFromLocation.readFile(exercise.getImage()))
                 .build();
     }
 
@@ -53,7 +56,7 @@ public class DtoMapper {
                 .bodyType(workout.getBodyType())
                 .age(workout.getAge())
                 .gender(workout.getGender())
-                .coverImage(workout.getCoverImage().getBytes())
+                .coverImage(ReadFileFromLocation.readFile(workout.getCoverImage()))
                 .exercises(workout.getExercises())
                 .comments(workout.getComments())
                 .createdBy(workout.getCreatedBy())
