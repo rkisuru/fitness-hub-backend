@@ -1,5 +1,6 @@
 package com.rkisuru.fitnesshub.service;
 
+import com.rkisuru.fitnesshub.dto.WorkoutEditRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
@@ -58,6 +59,32 @@ public class WorkoutService {
                 .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
 
         return mapper.fromWorkout(workout);
+    }
+
+    public Workout editWorkout(Long workoutId, WorkoutEditRequest request, Authentication connectedUser) {
+
+        Workout workout = workoutRepository.findById(workoutId)
+                .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
+
+        if (workout.getCreatedBy().equals(connectedUser.getName())) {
+
+            if (!request.title().isEmpty()) {
+                workout.setTitle(request.title());
+            }
+            if (request.calories() != null) {
+                workout.setCalories(request.calories());
+            }
+            if (!request.duration().isEmpty()) {
+                workout.setDuration(request.duration());
+            }
+            workout.setBodyType(request.bodyType());
+            workout.setAge(request.age());
+            workout.setWorkoutType(request.workoutType());
+            workout.setGender(request.gender());
+
+            return workoutRepository.save(workout);
+        }
+        throw new AccessDeniedException("Access denied");
     }
 
 }
