@@ -2,6 +2,7 @@ package com.rkisuru.fitnesshub.controller;
 
 import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
+import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.service.ExerciseService;
 import com.rkisuru.fitnesshub.service.WorkoutService;
 import com.rkisuru.fitnesshub.service.UserService;
@@ -30,4 +31,11 @@ public class WorkoutController {
 
         return ResponseEntity.ok(exerciseService.addExercise(request, workoutId, connectedUser));
     }
+
+    @DeleteMapping("/{workoutId}")
+    public ResponseEntity<?> deleteWorkout(@PathVariable Long workoutId, Authentication connectedUser) {
+
+        return ResponseEntity.ok(workoutService.deleteWorkout(workoutId, connectedUser));
+    }
+
 }
