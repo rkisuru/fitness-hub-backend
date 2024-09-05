@@ -38,4 +38,9 @@ public class WorkoutController {
         return ResponseEntity.ok(workoutService.deleteWorkout(workoutId, connectedUser));
     }
 
+    @GetMapping
+    public ResponseEntity<?> getAllWorkouts() {
+
+        return ResponseEntity.ok(workoutService.getAllWorkouts());
+    }
 }

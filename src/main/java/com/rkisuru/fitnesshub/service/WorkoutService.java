@@ -42,4 +42,13 @@ public class WorkoutService {
         }
         throw new AccessDeniedException("Access denied");
     }
+
+    public List<WorkoutResponse> getAllWorkouts() {
+
+        return workoutRepository.findAll()
+                .stream()
+                .map(mapper::fromWorkout)
+                .toList();
+    }
+
 }
