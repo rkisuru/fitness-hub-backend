@@ -1,6 +1,6 @@
 package com.rkisuru.fitnesshub.dto;
 
-import com.rkisuru.fitnesshub.entity.Comment;
+import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.entity.Exercise;
 import com.rkisuru.fitnesshub.enums.Age;
 import com.rkisuru.fitnesshub.enums.BodyType;
@@ -26,7 +26,9 @@ public class WorkoutResponse {
     private WorkoutType workoutType;
     private Gender gender;
     private List<Exercise> exercises;
-    private List<Comment> comments;
+    private List<Feedback> feedbacks;
+    private int likeCount;
+    private int viewCount;
     private LocalDateTime createdAt;
     private String createdBy;
     private LocalDateTime modifiedAt;

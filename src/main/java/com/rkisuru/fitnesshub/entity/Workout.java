@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class Workout {
 
     @Id
@@ -61,7 +63,11 @@ public class Workout {
 
     @OneToMany(mappedBy = "workout")
     @JsonIgnore
-    private List<Comment> comments;
+    private List<Feedback> feedbacks;
+
+    @OneToMany(mappedBy = "post")
+    @JsonIgnore
+    private List<Like> likes;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
@@ -74,5 +80,8 @@ public class Workout {
     @LastModifiedDate
     @Column(insertable = false)
     private LocalDateTime modifiedAt;
+
+    private int viewCount;
+    private int likeCount;
 
 }
