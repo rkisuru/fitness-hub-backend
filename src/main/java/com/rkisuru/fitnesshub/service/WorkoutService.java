@@ -15,7 +15,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +29,7 @@ public class WorkoutService {
     private final DtoMapper mapper;
     private final ExerciseRepository exerciseRepository;
     private final LikeRepository likeRepository;
+    private final ImageUploadService imageUploadService;
 
     public Long saveWorkout(WorkoutRequest request) {
 
@@ -114,6 +117,20 @@ public class WorkoutService {
             workout.setLikeCount(workout.getLikeCount()+1);
         }
         return workoutRepository.save(workout);
+    }
+
+    public Workout uploadCover(Long workoutId, MultipartFile file, Authentication connectedUser) throws IOException {
+
+        Workout workout = workoutRepository.findById(workoutId)
+                .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
+
+        if (!workout.getCreatedBy().equals(connectedUser.getName())) {
+
+            var image = imageUploadService.uploadFile(file);
+            workout.setCoverImage(image);
+            return workoutRepository.save(workout);
+        }
+        throw new AccessDeniedException("Access denied");
     }
 
 }

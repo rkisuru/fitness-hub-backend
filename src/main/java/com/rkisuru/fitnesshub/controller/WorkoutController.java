@@ -9,6 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/v1/workout")
@@ -56,7 +59,13 @@ public class WorkoutController {
 
     @PostMapping("/{workoutId}")
     public ResponseEntity<?> likeWorkout(@PathVariable Long workoutId, Authentication connectedUser) {
-        
+
         return ResponseEntity.ok(workoutService.likeWorkout(workoutId, connectedUser));
+    }
+
+    @PostMapping(value = "/{workoutId}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadCoverImage(@PathVariable Long workoutId, @RequestParam("file") MultipartFile file, Authentication connectedUser) throws IOException {
+
+        return ResponseEntity.ok(workoutService.uploadCover(workoutId, file, connectedUser));
     }
 }
