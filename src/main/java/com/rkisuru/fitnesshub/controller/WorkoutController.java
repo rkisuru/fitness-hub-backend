@@ -43,14 +43,20 @@ public class WorkoutController {
     }
 
     @GetMapping("/{workoutId}")
-    public ResponseEntity<?> getWorkoutById(@PathVariable Long workoutId) {
+    public ResponseEntity<?> getWorkoutById(@PathVariable Long workoutId, Authentication connectedUser) {
 
-        return ResponseEntity.ok(workoutService.findWorkoutById(workoutId));
+        return ResponseEntity.ok(workoutService.findWorkoutById(workoutId, connectedUser));
     }
 
     @PutMapping("/{workoutId}")
     public ResponseEntity<?> updateWorkout(@PathVariable Long workoutId, @RequestBody WorkoutEditRequest request, Authentication connectedUser) {
 
         return ResponseEntity.ok(workoutService.editWorkout(workoutId, request, connectedUser));
+    }
+
+    @PostMapping("/{workoutId}")
+    public ResponseEntity<?> likeWorkout(@PathVariable Long workoutId, Authentication connectedUser) {
+        
+        return ResponseEntity.ok(workoutService.likeWorkout(workoutId, connectedUser));
     }
 }

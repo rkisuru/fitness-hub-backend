@@ -4,9 +4,11 @@ import com.rkisuru.fitnesshub.dto.WorkoutEditRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
+import com.rkisuru.fitnesshub.entity.Like;
 import com.rkisuru.fitnesshub.entity.Workout;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.ExerciseRepository;
+import com.rkisuru.fitnesshub.repository.LikeRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,10 +26,13 @@ public class WorkoutService {
     private final WorkoutRepository workoutRepository;
     private final DtoMapper mapper;
     private final ExerciseRepository exerciseRepository;
+    private final LikeRepository likeRepository;
 
     public Long saveWorkout(WorkoutRequest request) {
 
         Workout workout = mapper.toWorkout(request);
+        workout.setViewCount(0);
+        workout.setLikeCount(0);
         return workoutRepository.save(workout).getId();
     }
 
@@ -53,11 +59,15 @@ public class WorkoutService {
                 .toList();
     }
 
-    public WorkoutResponse findWorkoutById(Long workoutId) {
+    public WorkoutResponse findWorkoutById(Long workoutId, Authentication connectedUser) {
 
         Workout workout = workoutRepository.findById(workoutId)
                 .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
 
+        if (!workout.getCreatedBy().equals(connectedUser.getName())) {
+            workout.setViewCount(workout.getViewCount() + 1);
+            workoutRepository.save(workout);
+        }
         return mapper.fromWorkout(workout);
     }
 
@@ -85,6 +95,25 @@ public class WorkoutService {
             return workoutRepository.save(workout);
         }
         throw new AccessDeniedException("Access denied");
+    }
+
+    public Workout likeWorkout(Long workoutId, Authentication connectedUser) {
+
+        Workout workout = workoutRepository.findById(workoutId)
+                .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
+
+        Optional<Like> optionalLike = likeRepository.findByUserId(connectedUser.getName(), workoutId);
+        if (optionalLike.isPresent()) {
+            Like like = optionalLike.get();
+            workout.setLikeCount(workout.getLikeCount() - 1);
+            likeRepository.delete(like);
+        }
+        else {
+            Like like = new Like();
+            likeRepository.save(like);
+            workout.setLikeCount(workout.getLikeCount()+1);
+        }
+        return workoutRepository.save(workout);
     }
 
 }
