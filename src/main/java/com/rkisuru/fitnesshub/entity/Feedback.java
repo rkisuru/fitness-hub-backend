@@ -1,30 +1,27 @@
 package com.rkisuru.fitnesshub.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Exercise {
+public class Feedback {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
-
-    private String image;
-
-    private String targetMuscle;
-
-    private String description;
+    private String feedback;
 
     @ManyToOne
     @JoinColumn(name = "workout_id")
@@ -33,4 +30,8 @@ public class Exercise {
     @CreatedBy
     @Column(nullable = false, updatable = false)
     private String createdBy;
+
+    @CreatedDate
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 }
