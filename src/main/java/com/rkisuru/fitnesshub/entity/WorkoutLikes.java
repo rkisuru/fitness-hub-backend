@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -11,7 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @Data
 @EntityListeners(AuditingEntityListener.class)
-public class Like {
+public class WorkoutLikes {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,4 +25,8 @@ public class Like {
     @ManyToOne
     @JoinColumn(name ="workout_id")
     private Workout workout;
+
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
 }

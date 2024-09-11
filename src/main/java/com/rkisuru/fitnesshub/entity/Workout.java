@@ -65,9 +65,9 @@ public class Workout {
     @JsonIgnore
     private List<Feedback> feedbacks;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "workout")
     @JsonIgnore
-    private List<Like> likes;
+    private List<WorkoutLikes> workoutLikes;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

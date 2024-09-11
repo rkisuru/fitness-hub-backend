@@ -4,7 +4,7 @@ import com.rkisuru.fitnesshub.dto.WorkoutEditRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
-import com.rkisuru.fitnesshub.entity.Like;
+import com.rkisuru.fitnesshub.entity.WorkoutLikes;
 import com.rkisuru.fitnesshub.entity.Workout;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.ExerciseRepository;
@@ -105,15 +105,15 @@ public class WorkoutService {
         Workout workout = workoutRepository.findById(workoutId)
                 .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
 
-        Optional<Like> optionalLike = likeRepository.findByUserId(connectedUser.getName(), workoutId);
+        Optional<WorkoutLikes> optionalLike = likeRepository.findByUserId(connectedUser.getName(), workoutId);
         if (optionalLike.isPresent()) {
-            Like like = optionalLike.get();
+            WorkoutLikes workoutLikes = optionalLike.get();
             workout.setLikeCount(workout.getLikeCount() - 1);
-            likeRepository.delete(like);
+            likeRepository.delete(workoutLikes);
         }
         else {
-            Like like = new Like();
-            likeRepository.save(like);
+            WorkoutLikes workoutLikes = new WorkoutLikes();
+            likeRepository.save(workoutLikes);
             workout.setLikeCount(workout.getLikeCount()+1);
         }
         return workoutRepository.save(workout);

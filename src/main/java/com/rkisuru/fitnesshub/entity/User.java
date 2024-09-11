@@ -50,6 +50,10 @@ public class User implements UserDetails, Principal {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<WorkoutLikes> workoutLikes;
+
     @Override
     public String getUsername() {
         return email;
