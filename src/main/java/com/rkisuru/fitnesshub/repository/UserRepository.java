@@ -1,7 +1,7 @@
-package com.rkisuru.food.recipe.repository;
+package com.rkisuru.fitnesshub.repository;
 
-import com.rkisuru.food.recipe.model.User;
-import com.rkisuru.food.recipe.role.Role;
+import com.rkisuru.fitnesshub.entity.User;
+import com.rkisuru.fitnesshub.enums.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
