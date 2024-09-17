@@ -1,7 +1,10 @@
 package com.rkisuru.fitnesshub.service;
 
+import com.rkisuru.fitnesshub.dto.FeedbackEditRequest;
+import com.rkisuru.fitnesshub.dto.FeedbackRequest;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.entity.Workout;
+import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.FeedbackRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -16,28 +19,33 @@ public class FeedbackService {
 
     private final FeedbackRepository feedbackRepository;
     private final WorkoutRepository workoutRepository;
+    private final DtoMapper mapper;
 
-    public Feedback saveFeedback(Feedback feedback, Long workoutId) {
+    public Feedback saveFeedback(FeedbackRequest request, Long workoutId) throws Exception {
 
         Workout workout = workoutRepository.findById(workoutId)
                 .orElseThrow(() -> new RuntimeException("Workout not found"));
 
-        feedback.setWorkout(workout);
-        return feedbackRepository.save(feedback);
+        Feedback feedback = mapper.toFeedback(request);
+        if (!feedback.getFeedback().isBlank()) {
+            feedback.setWorkout(workout);
+            workout.getFeedbacks().add(feedback);
+            return feedbackRepository.save(feedback);
+        }
+        throw new Exception("Feedback should not be empty!");
     }
 
-    public Feedback editFeedback(String feedback, Authentication connectedUser, Long feedbackId) {
+    public Feedback editFeedback(FeedbackEditRequest request, Authentication connectedUser, Long feedbackId) {
 
         Feedback _feedback = feedbackRepository.findById(feedbackId)
-                .orElseThrow(()-> new EntityNotFoundException("Feedback not found"));
+                .orElseThrow(()-> new EntityNotFoundException("feedback not found"));
 
         if (_feedback.getCreatedBy().equals(connectedUser.getName())) {
 
-            if (!feedback.isEmpty()) {
-                _feedback.setFeedback(feedback);
+            if (!request.feedback().isBlank()) {
+                _feedback.setFeedback(request.feedback());
                 return feedbackRepository.save(_feedback);
             }
-            return feedbackRepository.save(_feedback);
         }
         throw new AccessDeniedException("Access denied");
     }
@@ -45,11 +53,11 @@ public class FeedbackService {
     public String deleteFeedback(Long feedbackId, Authentication connectedUser) {
 
         Feedback feedback = feedbackRepository.findById(feedbackId)
-                .orElseThrow(()-> new EntityNotFoundException("Feedback not found"));
+                .orElseThrow(()-> new EntityNotFoundException("feedback not found"));
 
         if (feedback.getCreatedBy().equals(connectedUser.getName())) {
             feedbackRepository.delete(feedback);
-            return "Feedback deleted Successfully";
+            return "feedback deleted Successfully";
         }
         throw new AccessDeniedException("Access denied");
     }

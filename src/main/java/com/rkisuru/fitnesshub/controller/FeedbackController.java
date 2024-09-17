@@ -1,5 +1,7 @@
 package com.rkisuru.fitnesshub.controller;
 
+import com.rkisuru.fitnesshub.dto.FeedbackEditRequest;
+import com.rkisuru.fitnesshub.dto.FeedbackRequest;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.service.FeedbackService;
 import lombok.RequiredArgsConstructor;
@@ -15,15 +17,15 @@ public class FeedbackController {
     public final FeedbackService feedbackService;
 
     @PostMapping("/{workoutId}")
-    public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback feedback, @PathVariable Long workoutId) {
+    public ResponseEntity<Feedback> createFeedback(@RequestBody FeedbackRequest request, @PathVariable Long workoutId) throws Exception {
 
-        return ResponseEntity.ok(feedbackService.saveFeedback(feedback, workoutId));
+        return ResponseEntity.ok(feedbackService.saveFeedback(request, workoutId));
     }
 
     @PutMapping("/{feedbackId}")
-    public ResponseEntity<Feedback> updateFeedback(@RequestBody String feedback, Authentication connectedUser, @PathVariable Long feedbackId) {
+    public ResponseEntity<Feedback> updateFeedback(@RequestBody FeedbackEditRequest request, Authentication connectedUser, @PathVariable Long feedbackId) {
 
-        return ResponseEntity.ok(feedbackService.editFeedback(feedback, connectedUser, feedbackId));
+        return ResponseEntity.ok(feedbackService.editFeedback(request, connectedUser, feedbackId));
     }
 
     @DeleteMapping("/{feedbackId}")
