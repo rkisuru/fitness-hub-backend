@@ -81,13 +81,13 @@ public class WorkoutService {
 
         if (workout.getCreatedBy().equals(connectedUser.getName())) {
 
-            if (!request.title().isEmpty()) {
+            if (!request.title().isBlank()) {
                 workout.setTitle(request.title());
             }
             if (request.calories() != null) {
                 workout.setCalories(request.calories());
             }
-            if (!request.duration().isEmpty()) {
+            if (!request.duration().isBlank()) {
                 workout.setDuration(request.duration());
             }
             workout.setBodyType(request.bodyType());
@@ -124,7 +124,7 @@ public class WorkoutService {
         Workout workout = workoutRepository.findById(workoutId)
                 .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
 
-        if (!workout.getCreatedBy().equals(connectedUser.getName())) {
+        if (workout.getCreatedBy().equals(connectedUser.getName())) {
 
             var image = imageUploadService.uploadFile(file);
             workout.setCoverImage(image);
