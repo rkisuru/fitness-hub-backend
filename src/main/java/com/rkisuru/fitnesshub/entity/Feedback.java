@@ -1,7 +1,9 @@
 package com.rkisuru.fitnesshub.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Builder
 public class Feedback {
 
     @Id
@@ -25,6 +28,7 @@ public class Feedback {
 
     @ManyToOne
     @JoinColumn(name = "workout_id")
+    @JsonIgnore
     private Workout workout;
 
     @CreatedBy

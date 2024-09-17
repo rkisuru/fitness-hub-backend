@@ -1,5 +1,6 @@
 package com.rkisuru.fitnesshub.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedBy;
@@ -28,6 +29,7 @@ public class Exercise {
 
     @ManyToOne
     @JoinColumn(name = "workout_id")
+    @JsonIgnore
     private Workout workout;
 
     @CreatedBy
