@@ -61,13 +61,13 @@ public class ExerciseService {
 
         if (exercise.getCreatedBy().equals(connectedUser.getName())) {
 
-            if (!request.name().isEmpty()) {
+            if (!request.name().isBlank()) {
                 exercise.setName(request.name());
             }
-            if (!request.description().isEmpty()) {
+            if (!request.description().isBlank()) {
                 exercise.setDescription(request.description());
             }
-            if (!request.targetMuscle().isEmpty()) {
+            if (!request.targetMuscle().isBlank()) {
                 exercise.setTargetMuscle(request.targetMuscle());
             }
             return exerciseRepository.save(exercise);
