@@ -1,10 +1,8 @@
 package com.rkisuru.fitnesshub.mapper;
 
-import com.rkisuru.fitnesshub.dto.ExerciseRequest;
-import com.rkisuru.fitnesshub.dto.ExerciseResponse;
-import com.rkisuru.fitnesshub.dto.WorkoutRequest;
-import com.rkisuru.fitnesshub.dto.WorkoutResponse;
+import com.rkisuru.fitnesshub.dto.*;
 import com.rkisuru.fitnesshub.entity.Exercise;
+import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.entity.Workout;
 import com.rkisuru.fitnesshub.service.ReadFileFromLocation;
 import lombok.RequiredArgsConstructor;
@@ -64,6 +62,13 @@ public class DtoMapper {
                 .createdBy(workout.getCreatedBy())
                 .createdAt(workout.getCreatedAt())
                 .modifiedAt(workout.getModifiedAt())
+                .build();
+    }
+
+    public Feedback toFeedback(FeedbackRequest request) {
+
+        return Feedback.builder()
+                .feedback(request.feedback())
                 .build();
     }
 }
