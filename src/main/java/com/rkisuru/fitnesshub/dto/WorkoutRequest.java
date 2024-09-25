@@ -15,21 +15,9 @@ public record WorkoutRequest(
 
         String duration,
         Integer calories,
-
-        @NotNull
-        @NotEmpty
         BodyType bodyType,
-
-        @NotNull
-        @NotEmpty
         Age age,
-
-        @NotNull
-        @NotEmpty
         WorkoutType workoutType,
-
-        @NotNull
-        @NotEmpty
         Gender gender
 ) {
 }
