@@ -4,12 +4,12 @@ import com.rkisuru.fitnesshub.dto.FeedbackEditRequest;
 import com.rkisuru.fitnesshub.dto.FeedbackRequest;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.entity.Workout;
+import com.rkisuru.fitnesshub.exception.OperationNotPermittedException;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.FeedbackRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
@@ -47,7 +47,7 @@ public class FeedbackService {
                 return feedbackRepository.save(_feedback);
             }
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You do not have permission to edit this feedback!");
     }
 
     public String deleteFeedback(Long feedbackId, Authentication connectedUser) {
@@ -59,6 +59,6 @@ public class FeedbackService {
             feedbackRepository.delete(feedback);
             return "feedback deleted Successfully";
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You do not have permission to delete this feedback!");
     }
 }

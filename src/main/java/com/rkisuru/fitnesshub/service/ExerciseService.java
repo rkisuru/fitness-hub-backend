@@ -5,12 +5,12 @@ import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.dto.ExerciseResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
 import com.rkisuru.fitnesshub.entity.Workout;
+import com.rkisuru.fitnesshub.exception.OperationNotPermittedException;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.ExerciseRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,7 +38,7 @@ public class ExerciseService {
             exercise.setWorkout(workout);
             return exerciseRepository.save(exercise).getId();
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You are not allowed to add an exercise to this workout");
     }
 
     public String removeExercise(Long exerciseId, Authentication connectedUser) {
@@ -50,7 +50,7 @@ public class ExerciseService {
             exerciseRepository.delete(exercise);
             return "Exercise removed Successfully";
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You are not allowed to remove an exercise from this workout");
     }
 
     public Exercise editExercise(Long exerciseId, Authentication connectedUser, ExerciseEditRequest request) {
@@ -72,7 +72,7 @@ public class ExerciseService {
             }
             return exerciseRepository.save(exercise);
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You are not allowed to edit this exercise");
     }
 
     public List<ExerciseResponse> getExercisesByWorkoutId(Long workoutId) {
@@ -98,6 +98,6 @@ public class ExerciseService {
             exerciseRepository.save(exercise);
             return "Image uploaded successfully";
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You are not allowed to upload an image");
     }
 }

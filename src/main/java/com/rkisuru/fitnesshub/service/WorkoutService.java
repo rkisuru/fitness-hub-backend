@@ -6,13 +6,13 @@ import com.rkisuru.fitnesshub.dto.WorkoutResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
 import com.rkisuru.fitnesshub.entity.WorkoutLikes;
 import com.rkisuru.fitnesshub.entity.Workout;
+import com.rkisuru.fitnesshub.exception.OperationNotPermittedException;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.ExerciseRepository;
 import com.rkisuru.fitnesshub.repository.LikeRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -51,7 +51,7 @@ public class WorkoutService {
             workoutRepository.delete(workout);
             return "Workout deleted Successfully";
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You do not have permission to delete this workout");
     }
 
     public List<WorkoutResponse> getAllWorkouts() {
@@ -97,7 +97,7 @@ public class WorkoutService {
 
             return workoutRepository.save(workout);
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You do not have permission to edit this workout");
     }
 
     public Workout likeWorkout(Long workoutId, Authentication connectedUser) {
@@ -130,7 +130,7 @@ public class WorkoutService {
             workout.setCoverImage(image);
             return workoutRepository.save(workout);
         }
-        throw new AccessDeniedException("Access denied");
+        throw new OperationNotPermittedException("You do not have permission to upload cover");
     }
 
 }
