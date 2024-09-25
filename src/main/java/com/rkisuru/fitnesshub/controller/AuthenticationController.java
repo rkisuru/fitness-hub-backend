@@ -6,6 +6,7 @@ import com.rkisuru.fitnesshub.dto.SignInRequest;
 import com.rkisuru.fitnesshub.dto.SignUpRequest;
 import com.rkisuru.fitnesshub.entity.User;
 import com.rkisuru.fitnesshub.service.AuthenticationService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,12 +22,12 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<User> signUp(@RequestBody SignUpRequest signUpRequest){
+    public ResponseEntity<User> signUp(@Valid @RequestBody SignUpRequest signUpRequest){
         return ResponseEntity.ok(authenticationService.SignUp(signUpRequest));
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtAuthenticationResponse> signIn(@RequestBody SignInRequest signInRequest){
+    public ResponseEntity<JwtAuthenticationResponse> signIn(@Valid @RequestBody SignInRequest signInRequest){
         return ResponseEntity.ok(authenticationService.signIn(signInRequest));
     }
 

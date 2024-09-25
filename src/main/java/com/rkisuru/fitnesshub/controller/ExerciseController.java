@@ -3,6 +3,7 @@ package com.rkisuru.fitnesshub.controller;
 import com.rkisuru.fitnesshub.dto.ExerciseEditRequest;
 import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.service.ExerciseService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -25,7 +26,7 @@ public class ExerciseController {
     }
 
     @PostMapping("/{workoutId}")
-    public ResponseEntity<?> addExercise(@RequestBody ExerciseRequest request, @PathVariable Long workoutId, Authentication connectedUser) {
+    public ResponseEntity<?> addExercise(@Valid @RequestBody ExerciseRequest request, @PathVariable Long workoutId, Authentication connectedUser) {
 
         return ResponseEntity.ok(exerciseService.addExercise(request, workoutId, connectedUser));
     }

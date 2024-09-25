@@ -9,20 +9,25 @@ import jakarta.validation.constraints.NotNull;
 
 public record WorkoutRequest(
 
-        @NotNull
-        @NotEmpty
+        @NotNull(message = "Title cannot be empty")
+        @NotEmpty(message = "Title cannot be empty")
         String title,
+
         String duration,
         Integer calories,
+
         @NotNull
         @NotEmpty
         BodyType bodyType,
+
         @NotNull
         @NotEmpty
         Age age,
+
         @NotNull
         @NotEmpty
         WorkoutType workoutType,
+
         @NotNull
         @NotEmpty
         Gender gender

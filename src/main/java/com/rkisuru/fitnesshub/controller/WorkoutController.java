@@ -5,6 +5,7 @@ import com.rkisuru.fitnesshub.dto.WorkoutEditRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
 import com.rkisuru.fitnesshub.service.ExerciseService;
 import com.rkisuru.fitnesshub.service.WorkoutService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,13 +23,13 @@ public class WorkoutController {
     private final ExerciseService exerciseService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createWorkout(@RequestBody WorkoutRequest request) {
+    public ResponseEntity<?> createWorkout(@Valid @RequestBody WorkoutRequest request) {
 
         return ResponseEntity.ok(workoutService.saveWorkout(request));
     }
 
     @PostMapping("/create/{workoutId}")
-    public ResponseEntity<?> createExercise(@RequestBody ExerciseRequest request, Authentication connectedUser, @PathVariable Long workoutId) {
+    public ResponseEntity<?> createExercise(@Valid @RequestBody ExerciseRequest request, Authentication connectedUser, @PathVariable Long workoutId) {
 
         return ResponseEntity.ok(exerciseService.addExercise(request, workoutId, connectedUser));
     }

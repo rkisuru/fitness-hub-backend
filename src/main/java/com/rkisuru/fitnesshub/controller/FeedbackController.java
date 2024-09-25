@@ -4,6 +4,7 @@ import com.rkisuru.fitnesshub.dto.FeedbackEditRequest;
 import com.rkisuru.fitnesshub.dto.FeedbackRequest;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.service.FeedbackService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -17,7 +18,7 @@ public class FeedbackController {
     public final FeedbackService feedbackService;
 
     @PostMapping("/{workoutId}")
-    public ResponseEntity<Feedback> createFeedback(@RequestBody FeedbackRequest request, @PathVariable Long workoutId) throws Exception {
+    public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody FeedbackRequest request, @PathVariable Long workoutId) throws Exception {
 
         return ResponseEntity.ok(feedbackService.saveFeedback(request, workoutId));
     }
