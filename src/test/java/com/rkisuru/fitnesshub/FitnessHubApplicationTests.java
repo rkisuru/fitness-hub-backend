@@ -1,10 +1,10 @@
-package com.rkisuru.food.recipe;
+package com.rkisuru.fitnesshub;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class FoodRecipeSharingApplicationTests {
+class FitnessHubApplicationTests {
 
 	@Test
 	void contextLoads() {
