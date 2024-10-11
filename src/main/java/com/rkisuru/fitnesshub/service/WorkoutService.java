@@ -39,7 +39,7 @@ public class WorkoutService {
         return workoutRepository.save(workout).getId();
     }
 
-    public String deleteWorkout(Long id, Authentication connectedUser) {
+    public void deleteWorkout(Long id, Authentication connectedUser) {
 
         Workout workout = workoutRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Workout not found"));
@@ -49,7 +49,6 @@ public class WorkoutService {
             List<Exercise> exercises = workout.getExercises();
             exerciseRepository.deleteAll(exercises);
             workoutRepository.delete(workout);
-            return "Workout deleted Successfully";
         }
         throw new OperationNotPermittedException("You do not have permission to delete this workout");
     }

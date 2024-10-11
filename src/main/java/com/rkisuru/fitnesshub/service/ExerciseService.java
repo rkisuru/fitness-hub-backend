@@ -41,14 +41,13 @@ public class ExerciseService {
         throw new OperationNotPermittedException("You are not allowed to add an exercise to this workout");
     }
 
-    public String removeExercise(Long exerciseId, Authentication connectedUser) {
+    public void removeExercise(Long exerciseId, Authentication connectedUser) {
 
         Exercise exercise = exerciseRepository.findById(exerciseId)
                 .orElseThrow(()-> new EntityNotFoundException("Exercise not found"));
 
         if (exercise.getCreatedBy().equals(connectedUser.getName())) {
             exerciseRepository.delete(exercise);
-            return "Exercise removed Successfully";
         }
         throw new OperationNotPermittedException("You are not allowed to remove an exercise from this workout");
     }

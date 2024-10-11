@@ -6,9 +6,13 @@ import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.service.FeedbackService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -30,8 +34,13 @@ public class FeedbackController {
     }
 
     @DeleteMapping("/{feedbackId}")
-    public ResponseEntity<?> deleteFeedback(@PathVariable Long feedbackId, Authentication connectedUser) {
+    public ResponseEntity<Map<String, String>> deleteFeedback(@PathVariable Long feedbackId, Authentication connectedUser) {
 
-        return ResponseEntity.ok(feedbackService.deleteFeedback(feedbackId, connectedUser));
+        feedbackService.deleteFeedback(feedbackId, connectedUser);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Feedback deleted successfully");
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(response);
     }
 }

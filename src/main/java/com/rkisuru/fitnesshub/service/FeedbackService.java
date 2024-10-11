@@ -50,14 +50,13 @@ public class FeedbackService {
         throw new OperationNotPermittedException("You do not have permission to edit this feedback!");
     }
 
-    public String deleteFeedback(Long feedbackId, Authentication connectedUser) {
+    public void deleteFeedback(Long feedbackId, Authentication connectedUser) {
 
         Feedback feedback = feedbackRepository.findById(feedbackId)
                 .orElseThrow(()-> new EntityNotFoundException("feedback not found"));
 
         if (feedback.getCreatedBy().equals(connectedUser.getName())) {
             feedbackRepository.delete(feedback);
-            return "feedback deleted Successfully";
         }
         throw new OperationNotPermittedException("You do not have permission to delete this feedback!");
     }

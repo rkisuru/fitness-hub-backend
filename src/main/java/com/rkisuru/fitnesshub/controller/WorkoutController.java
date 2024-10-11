@@ -7,12 +7,15 @@ import com.rkisuru.fitnesshub.service.ExerciseService;
 import com.rkisuru.fitnesshub.service.WorkoutService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/workout")
@@ -35,9 +38,14 @@ public class WorkoutController {
     }
 
     @DeleteMapping("/{workoutId}")
-    public ResponseEntity<?> deleteWorkout(@PathVariable Long workoutId, Authentication connectedUser) {
+    public ResponseEntity<Map<String, String>> deleteWorkout(@PathVariable Long workoutId, Authentication connectedUser) {
 
-        return ResponseEntity.ok(workoutService.deleteWorkout(workoutId, connectedUser));
+        workoutService.deleteWorkout(workoutId, connectedUser);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "workout deleted successfully");
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(response);
     }
 
     @GetMapping
