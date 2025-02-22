@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.rkisuru</groupId>
-	<artifactId>food-workout-sharing</artifactId>
+	<artifactId>fitness-hub</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>food-workout-sharing</name>
-	<description>A food workout sharing web app</description>
+	<name>fitness-hub</name>
+	<description>A workout sharing platform</description>
 	<url/>
 	<licenses>
 		<license/>
