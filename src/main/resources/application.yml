@@ -1,0 +1,37 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: ${USERNAME}
+    password: ${PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        boot:
+          allow_jdbc_metadata_access: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 50MB
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+security:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-time: ${JWT_EXPIRATION_TIME}
+
+file:
+  upload:
+    path: ./uploads/
