@@ -1,6 +1,5 @@
 package com.rkisuru.fitnesshub.service;
 
-import com.rkisuru.fitnesshub.dto.ExerciseEditRequest;
 import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.dto.ExerciseResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
@@ -52,7 +51,7 @@ public class ExerciseService {
         throw new OperationNotPermittedException("You are not allowed to remove an exercise from this workout");
     }
 
-    public Exercise editExercise(Long exerciseId, Authentication connectedUser, ExerciseEditRequest request) {
+    public Exercise editExercise(Long exerciseId, Authentication connectedUser, ExerciseRequest request) {
 
 
         Exercise exercise = exerciseRepository.findById(exerciseId)

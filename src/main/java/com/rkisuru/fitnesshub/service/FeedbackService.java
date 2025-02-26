@@ -1,6 +1,5 @@
 package com.rkisuru.fitnesshub.service;
 
-import com.rkisuru.fitnesshub.dto.FeedbackEditRequest;
 import com.rkisuru.fitnesshub.dto.FeedbackRequest;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.entity.Workout;
@@ -35,7 +34,7 @@ public class FeedbackService {
         throw new Exception("Feedback should not be empty!");
     }
 
-    public Feedback editFeedback(FeedbackEditRequest request, Authentication connectedUser, Long feedbackId) {
+    public Feedback editFeedback(FeedbackRequest request, Authentication connectedUser, Long feedbackId) {
 
         Feedback _feedback = feedbackRepository.findById(feedbackId)
                 .orElseThrow(()-> new EntityNotFoundException("feedback not found"));

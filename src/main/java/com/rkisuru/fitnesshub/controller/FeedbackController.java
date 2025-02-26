@@ -1,6 +1,5 @@
 package com.rkisuru.fitnesshub.controller;
 
-import com.rkisuru.fitnesshub.dto.FeedbackEditRequest;
 import com.rkisuru.fitnesshub.dto.FeedbackRequest;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.service.FeedbackService;
@@ -15,26 +14,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/{workoutId}/feedbacks")
 @RequiredArgsConstructor
 public class FeedbackController {
 
     public final FeedbackService feedbackService;
 
-    @PostMapping("/{workoutId}")
+    @PostMapping("/")
     public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody FeedbackRequest request, @PathVariable Long workoutId) throws Exception {
 
         return ResponseEntity.ok(feedbackService.saveFeedback(request, workoutId));
     }
 
-    @PutMapping("/{feedbackId}")
-    public ResponseEntity<Feedback> updateFeedback(@RequestBody FeedbackEditRequest request, Authentication connectedUser, @PathVariable Long feedbackId) {
+    @PatchMapping("/")
+    public ResponseEntity<Feedback> updateFeedback(@RequestBody FeedbackRequest request, Authentication connectedUser, @PathVariable Long workoutId, @RequestParam Long feedbackId) {
 
         return ResponseEntity.ok(feedbackService.editFeedback(request, connectedUser, feedbackId));
     }
 
-    @DeleteMapping("/{feedbackId}")
-    public ResponseEntity<Map<String, String>> deleteFeedback(@PathVariable Long feedbackId, Authentication connectedUser) {
+    @DeleteMapping("/")
+    public ResponseEntity<Map<String, String>> deleteFeedback(@PathVariable Long workoutId, @RequestParam Long feedbackId, Authentication connectedUser) {
 
         feedbackService.deleteFeedback(feedbackId, connectedUser);
         Map<String, String> response = new HashMap<>();

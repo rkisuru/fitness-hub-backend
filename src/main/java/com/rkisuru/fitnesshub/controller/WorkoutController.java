@@ -1,9 +1,7 @@
 package com.rkisuru.fitnesshub.controller;
 
-import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutEditRequest;
 import com.rkisuru.fitnesshub.dto.WorkoutRequest;
-import com.rkisuru.fitnesshub.service.ExerciseService;
 import com.rkisuru.fitnesshub.service.WorkoutService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,23 +16,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/workout")
+@RequestMapping("/api/v1/workouts")
 @RequiredArgsConstructor
 public class WorkoutController {
 
     private final WorkoutService workoutService;
-    private final ExerciseService exerciseService;
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<?> createWorkout(@Valid @RequestBody WorkoutRequest request) {
 
         return ResponseEntity.ok(workoutService.saveWorkout(request));
-    }
-
-    @PostMapping("/create/{workoutId}")
-    public ResponseEntity<?> createExercise(@Valid @RequestBody ExerciseRequest request, Authentication connectedUser, @PathVariable Long workoutId) {
-
-        return ResponseEntity.ok(exerciseService.addExercise(request, workoutId, connectedUser));
     }
 
     @DeleteMapping("/{workoutId}")
@@ -48,7 +39,7 @@ public class WorkoutController {
                 .body(response);
     }
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<?> getAllWorkouts() {
 
         return ResponseEntity.ok(workoutService.getAllWorkouts());
@@ -66,7 +57,7 @@ public class WorkoutController {
         return ResponseEntity.ok(workoutService.editWorkout(workoutId, request, connectedUser));
     }
 
-    @PostMapping("/{workoutId}")
+    @PatchMapping("/{workoutId}")
     public ResponseEntity<?> likeWorkout(@PathVariable Long workoutId, Authentication connectedUser) {
 
         return ResponseEntity.ok(workoutService.likeWorkout(workoutId, connectedUser));
