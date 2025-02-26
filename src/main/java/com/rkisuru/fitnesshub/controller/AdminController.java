@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/v1/admin")
 @RequiredArgsConstructor
 public class AdminController {
 
@@ -19,7 +19,7 @@ public class AdminController {
         return userRepository.findAll();
     }
 
-    @DeleteMapping("/delete/{user_id}")
+    @DeleteMapping("/users/{user_id}")
     public String deleteUser(@PathVariable Long user_id) throws Exception{
         boolean userExists = userRepository.existsById(user_id);
         if(userExists){
