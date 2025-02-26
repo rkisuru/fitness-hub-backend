@@ -14,5 +14,5 @@ public class ExerciseResponse {
     private String name;
     private String description;
     private String targetMuscle;
-    private byte[] image;
+    private String image;
 }

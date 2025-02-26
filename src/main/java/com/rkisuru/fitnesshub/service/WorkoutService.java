@@ -15,7 +15,6 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -29,17 +28,18 @@ public class WorkoutService {
     private final DtoMapper mapper;
     private final ExerciseRepository exerciseRepository;
     private final LikeRepository likeRepository;
-    private final ImageUploadService imageUploadService;
+    private final CloudinaryService cloudinaryService;
 
     public Long saveWorkout(WorkoutRequest request) {
 
         Workout workout = mapper.toWorkout(request);
         workout.setViewCount(0);
         workout.setLikeCount(0);
+
         return workoutRepository.save(workout).getId();
     }
 
-    public void deleteWorkout(Long id, Authentication connectedUser) {
+    public void deleteWorkout(Long id, Authentication connectedUser) throws IOException {
 
         Workout workout = workoutRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Workout not found"));
@@ -48,6 +48,7 @@ public class WorkoutService {
 
             List<Exercise> exercises = workout.getExercises();
             exerciseRepository.deleteAll(exercises);
+            cloudinaryService.deleteImage(workout.getCoverId());
             workoutRepository.delete(workout);
         }
         throw new OperationNotPermittedException("You do not have permission to delete this workout");
@@ -118,18 +119,12 @@ public class WorkoutService {
         return workoutRepository.save(workout);
     }
 
-    public Workout uploadCover(Long workoutId, MultipartFile file, Authentication connectedUser) throws IOException {
+    public void saveCover(Long workoutId, String url, String coverId) {
 
         Workout workout = workoutRepository.findById(workoutId)
                 .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
-
-        if (workout.getCreatedBy().equals(connectedUser.getName())) {
-
-            var image = imageUploadService.uploadFile(file);
-            workout.setCoverImage(image);
-            return workoutRepository.save(workout);
-        }
-        throw new OperationNotPermittedException("You do not have permission to upload cover");
+        workout.setCoverImage(url);
+        workout.setCoverId(coverId);
+        workoutRepository.save(workout);
     }
-
 }

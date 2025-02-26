@@ -12,9 +12,7 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -24,7 +22,6 @@ public class ExerciseService {
     private final ExerciseRepository exerciseRepository;
     private final DtoMapper mapper;
     private final WorkoutRepository workoutRepository;
-    private final ImageUploadService imageUploadService;
 
     public Long addExercise(ExerciseRequest request, Long workoutId, Authentication connectedUser) {
 
@@ -84,18 +81,13 @@ public class ExerciseService {
                 .toList();
     }
 
-    public String uploadImage(Long exerciseId, MultipartFile file, Authentication connectedUser) throws IOException {
+    public void saveImage(Long exerciseId, String url, String publicId) {
 
-        Exercise exercise = exerciseRepository.findById(exerciseId)
-                .orElseThrow(()-> new EntityNotFoundException("Exercise not found"));
+            Exercise exercise = exerciseRepository.findById(exerciseId)
+                    .orElseThrow(()-> new EntityNotFoundException("Exercise not found"));
 
-        if (exercise.getCreatedBy().equals(connectedUser.getName())) {
-
-            var image = imageUploadService.uploadFile(file);
-            exercise.setImage(image);
+            exercise.setImage(url);
+            exercise.setImageId(publicId);
             exerciseRepository.save(exercise);
-            return "Image uploaded successfully";
-        }
-        throw new OperationNotPermittedException("You are not allowed to upload an image");
     }
 }

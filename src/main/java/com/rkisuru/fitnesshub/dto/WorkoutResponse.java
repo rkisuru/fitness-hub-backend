@@ -20,7 +20,7 @@ public class WorkoutResponse {
     private String title;
     private String duration;
     private Integer calories;
-    private byte[] coverImage;
+    private String coverImage;
     private BodyType bodyType;
     private Age age;
     private WorkoutType workoutType;

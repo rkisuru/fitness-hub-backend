@@ -40,7 +40,7 @@ public class DtoMapper {
                 .name(exercise.getName())
                 .description(exercise.getDescription())
                 .targetMuscle(exercise.getTargetMuscle())
-                .image(ReadFileFromLocation.readFile(exercise.getImage()))
+                .image(exercise.getImage())
                 .build();
     }
 
@@ -54,7 +54,7 @@ public class DtoMapper {
                 .bodyType(workout.getBodyType())
                 .age(workout.getAge())
                 .gender(workout.getGender())
-                .coverImage(ReadFileFromLocation.readFile(workout.getCoverImage()))
+                .coverImage(workout.getCoverImage())
                 .exercises(workout.getExercises())
                 .feedbacks(workout.getFeedbacks())
                 .likeCount(workout.getLikeCount())
