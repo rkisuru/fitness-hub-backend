@@ -13,8 +13,8 @@ public class SignUpRequest {
     @NotNull(message = "Firstname is required")
     private String firstname;
 
-    @NotEmpty(message = "Firstname is required")
-    @NotNull(message = "Firstname is required")
+    @NotEmpty(message = "Lastname is required")
+    @NotNull(message = "Lastname is required")
     private String lastname;
 
     @Email(message = "Enter a valid email address")
