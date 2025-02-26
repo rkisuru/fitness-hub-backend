@@ -14,26 +14,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/v1/{workoutId}/feedbacks")
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class FeedbackController {
 
     public final FeedbackService feedbackService;
 
-    @PostMapping("/")
+    @PostMapping("/{workoutId}/feedbacks")
     public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody FeedbackRequest request, @PathVariable Long workoutId) throws Exception {
 
         return ResponseEntity.ok(feedbackService.saveFeedback(request, workoutId));
     }
 
-    @PatchMapping("/")
-    public ResponseEntity<Feedback> updateFeedback(@RequestBody FeedbackRequest request, Authentication connectedUser, @PathVariable Long workoutId, @RequestParam Long feedbackId) {
+    @PatchMapping("/feedbacks")
+    public ResponseEntity<Feedback> updateFeedback(@RequestBody FeedbackRequest request, Authentication connectedUser, @RequestParam Long feedbackId) {
 
         return ResponseEntity.ok(feedbackService.editFeedback(request, connectedUser, feedbackId));
     }
 
-    @DeleteMapping("/")
-    public ResponseEntity<Map<String, String>> deleteFeedback(@PathVariable Long workoutId, @RequestParam Long feedbackId, Authentication connectedUser) {
+    @DeleteMapping("/feedbacks")
+    public ResponseEntity<Map<String, String>> deleteFeedback(@RequestParam Long feedbackId, Authentication connectedUser) {
 
         feedbackService.deleteFeedback(feedbackId, connectedUser);
         Map<String, String> response = new HashMap<>();
