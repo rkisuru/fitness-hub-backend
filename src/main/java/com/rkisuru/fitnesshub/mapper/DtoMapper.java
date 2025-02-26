@@ -4,7 +4,6 @@ import com.rkisuru.fitnesshub.dto.*;
 import com.rkisuru.fitnesshub.entity.Exercise;
 import com.rkisuru.fitnesshub.entity.Feedback;
 import com.rkisuru.fitnesshub.entity.Workout;
-import com.rkisuru.fitnesshub.service.ReadFileFromLocation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
