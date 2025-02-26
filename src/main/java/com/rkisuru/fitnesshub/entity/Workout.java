@@ -36,6 +36,7 @@ public class Workout {
     private String duration;
     private Integer calories;
     private String coverImage;
+    private String coverId;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
