@@ -3,7 +3,7 @@
 ![Fitness Hub API](https://img.shields.io/badge/API-Fitness%20Hub-blue.svg) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.3.1-brightgreen) ![Java](https://img.shields.io/badge/Java-22-orange)
 
 ## 📌 Overview
-The **Fitness Hub API** provides a platform for users to manage workouts, exercises, feedback, and authentication. The API supports **JWT authentication** for secure access.
+The **Fitness Hub API v2** provides an improved platform for users to manage workouts, exercises, feedback, and authentication. The API supports **JWT authentication** for secure access.
 
 ### 🌍 Base URL
 ```
@@ -17,7 +17,7 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
 ### ✨ Signup
-**Endpoint:** `POST /api/auth/signup`
+**Endpoint:** `POST /api/v1/auth/signup`
 ```json
 {
   "firstname": "John",
@@ -28,7 +28,7 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
 ### 🔐 Signin
-**Endpoint:** `POST /api/auth/signin`
+**Endpoint:** `POST /api/v1/auth/signin`
 ```json
 {
   "email": "john.doe@example.com",
@@ -37,7 +37,7 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
 ### 🔄 Token Refresh
-**Endpoint:** `POST /api/auth/refresh`
+**Endpoint:** `POST /api/v1/auth/refresh`
 ```json
 {
   "token": "your_refresh_token"
@@ -51,7 +51,7 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ### 🏋️ Workouts
 
 #### ➕ Create Workout
-**Endpoint:** `POST /api/v1/workout/create`
+**Endpoint:** `POST /api/v1/workouts/`
 ```json
 {
   "title": "Morning Yoga",
@@ -65,78 +65,71 @@ Authorization: Bearer YOUR_TOKEN_HERE
 ```
 
 #### 📋 Get All Workouts
-**Endpoint:** `GET /api/v1/workout`
+**Endpoint:** `GET /api/v1/workouts/`
 
 #### 🔍 Get Workout By ID
-**Endpoint:** `GET /api/v1/workout/{workoutId}`
+**Endpoint:** `GET /api/v1/workouts/{workoutId}`
 
 #### ✏️ Update Workout
-**Endpoint:** `PUT /api/v1/workout/{workoutId}`
-```json
-{
-  "title": "Updated Title",
-  "duration": "45 mins",
-  "calories": 300
-}
-```
+**Endpoint:** `PUT /api/v1/workouts/{workoutId}`
 
 #### ❌ Delete Workout
-**Endpoint:** `DELETE /api/v1/workout/{workoutId}`
+**Endpoint:** `DELETE /api/v1/workouts/{workoutId}`
+
+#### ❤️ Like Workout
+**Endpoint:** `PATCH /api/v1/workouts/{workoutId}`
+
+#### 📷 Upload Cover Image
+**Endpoint:** `POST /api/v1/workouts/{workoutId}/cover`
 
 ---
 
 ### 💪 Exercises
 
 #### ➕ Add Exercise to Workout
-**Endpoint:** `POST /api/v1/workout/exercises/{workoutId}`
-```json
-{
-  "name": "Push-ups",
-  "targetMuscle": "Chest",
-  "description": "Push-ups for upper body strength."
-}
-```
+**Endpoint:** `POST /api/v1/{workoutId}/exercises`
 
 #### 📋 Get Exercises By Workout ID
-**Endpoint:** `GET /api/v1/workout/exercises/{workoutId}`
+**Endpoint:** `GET /api/v1/{workoutId}/exercises`
 
 #### ✏️ Update Exercise
-**Endpoint:** `PUT /api/v1/workout/exercises/{exerciseId}`
-```json
-{
-  "name": "Updated Exercise Name",
-  "targetMuscle": "Arms"
-}
-```
+**Endpoint:** `PATCH /api/v1/{exerciseId}`
 
 #### ❌ Delete Exercise
-**Endpoint:** `DELETE /api/v1/workout/exercises/{exerciseId}`
+**Endpoint:** `DELETE /api/v1/{exerciseId}`
+
+#### 📷 Upload Exercise Image
+**Endpoint:** `POST /api/v1/{exerciseId}/image`
 
 ---
 
 ### 💬 Feedback
 
 #### ➕ Create Feedback
-**Endpoint:** `POST /api/v1/{workoutId}`
-```json
-{
-  "feedback": "Great workout!"
-}
-```
+**Endpoint:** `POST /api/v1/{workoutId}/feedbacks`
 
 #### ✏️ Update Feedback
-**Endpoint:** `PUT /api/v1/{feedbackId}`
-```json
-{
-  "feedback": "Updated feedback message."
-}
-```
+**Endpoint:** `PATCH /api/v1/feedbacks?feedbackId={feedbackId}`
 
 #### ❌ Delete Feedback
-**Endpoint:** `DELETE /api/v1/{feedbackId}`
+**Endpoint:** `DELETE /api/v1/feedbacks?feedbackId={feedbackId}`
 
 ---
 
+### 👤 User Management
+
+#### 👀 Get User Info
+**Endpoint:** `GET /api/v1/users/{user_id}`
+
+### 🔧 Admin Management
+
+#### 📋 Get All Users
+**Endpoint:** `GET /api/v1/admin/users`
+
+#### ❌ Delete User
+**Endpoint:** `DELETE /api/v1/admin/users/{user_id}`
+
+---
 
 ## 🔒 Security
 - **JWT-based authentication** required for secured endpoints.
@@ -152,10 +145,7 @@ To view interactive documentation:
 
 ---
 
-
 ### 🔍 Access the API
 - Base URL: `http://localhost:8080`
 - Explore the API using Swagger UI: `http://localhost:8080/swagger-ui.html`
-
----
 
