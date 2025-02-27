@@ -4,11 +4,11 @@ import com.rkisuru.fitnesshub.dto.ExerciseRequest;
 import com.rkisuru.fitnesshub.dto.ExerciseResponse;
 import com.rkisuru.fitnesshub.entity.Exercise;
 import com.rkisuru.fitnesshub.entity.Workout;
+import com.rkisuru.fitnesshub.exception.NotFoundException;
 import com.rkisuru.fitnesshub.exception.OperationNotPermittedException;
 import com.rkisuru.fitnesshub.mapper.DtoMapper;
 import com.rkisuru.fitnesshub.repository.ExerciseRepository;
 import com.rkisuru.fitnesshub.repository.WorkoutRepository;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class ExerciseService {
     public Long addExercise(ExerciseRequest request, Long workoutId, Authentication connectedUser) {
 
         Workout workout = workoutRepository.findById(workoutId)
-                .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
+                .orElseThrow(()-> new NotFoundException("Workout not found with id "+ workoutId));
 
         if (workout.getCreatedBy().equals(connectedUser.getName())) {
 
@@ -40,7 +40,7 @@ public class ExerciseService {
     public void removeExercise(Long exerciseId, Authentication connectedUser) {
 
         Exercise exercise = exerciseRepository.findById(exerciseId)
-                .orElseThrow(()-> new EntityNotFoundException("Exercise not found"));
+                .orElseThrow(()-> new NotFoundException("Exercise not found with id "+ exerciseId));
 
         if (exercise.getCreatedBy().equals(connectedUser.getName())) {
             exerciseRepository.delete(exercise);
@@ -52,7 +52,7 @@ public class ExerciseService {
 
 
         Exercise exercise = exerciseRepository.findById(exerciseId)
-                .orElseThrow(()-> new EntityNotFoundException("Exercise not found"));
+                .orElseThrow(()-> new NotFoundException("Exercise not found with id "+ exerciseId));
 
         if (exercise.getCreatedBy().equals(connectedUser.getName())) {
 
@@ -73,7 +73,7 @@ public class ExerciseService {
     public List<ExerciseResponse> getExercisesByWorkoutId(Long workoutId) {
 
         Workout workout = workoutRepository.findById(workoutId)
-                .orElseThrow(()-> new EntityNotFoundException("Workout not found"));
+                .orElseThrow(()-> new NotFoundException("Workout not found with id "+ workoutId));
 
         return workout.getExercises()
                 .stream()
@@ -84,7 +84,7 @@ public class ExerciseService {
     public void saveImage(Long exerciseId, String url, String publicId) {
 
             Exercise exercise = exerciseRepository.findById(exerciseId)
-                    .orElseThrow(()-> new EntityNotFoundException("Exercise not found"));
+                    .orElseThrow(()-> new NotFoundException("Exercise not found with id "+ exerciseId));
 
             exercise.setImage(url);
             exercise.setImageId(publicId);

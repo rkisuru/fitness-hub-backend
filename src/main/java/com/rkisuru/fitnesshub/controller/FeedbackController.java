@@ -21,7 +21,7 @@ public class FeedbackController {
     public final FeedbackService feedbackService;
 
     @PostMapping("/{workoutId}/feedbacks")
-    public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody FeedbackRequest request, @PathVariable Long workoutId) throws Exception {
+    public ResponseEntity<Feedback> createFeedback(@Valid @RequestBody FeedbackRequest request, @PathVariable Long workoutId) {
 
         return ResponseEntity.ok(feedbackService.saveFeedback(request, workoutId));
     }
